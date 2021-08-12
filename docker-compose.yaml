@@ -3,7 +3,6 @@ version: '3.4'
 services:
   samba:
     image: ghcr.io/ahayden/filebox:base
-    build: .
     container_name: samba
     hostname: samba
     extra_hosts:
@@ -20,10 +19,10 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - smb.conf:/etc/samba/smb.conf:ro
+      - ./smb.conf:/etc/samba/smb.conf:ro
       - /var/lib/samba:/var/lib/samba
-      - passwd:/etc/passwd:ro
-      - shadow:/etc/shadow:ro
+      - ./passwd:/etc/passwd:ro
+      - ./shadow:/etc/shadow:ro
       - /mnt/storage:/mnt/storage
 
 networks:

@@ -23,11 +23,6 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
-RUN adduser --disabled-password ${container_user} \
-    && usermod -a -G users ${container_user} 
-
-USER ${container_user}
-
 # From https://github.com/alubbock/samba-docker
 
 VOLUME ["/etc", "/var/cache/samba", "/var/lib/samba", "/var/log/samba",\
