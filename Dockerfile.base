@@ -22,7 +22,7 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
         gnupg2 \
         apt-transport-https \
         ca-certificates \
-        tini samba samba-client \
+        samba samba-client \
     && update-ca-certificates \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
@@ -34,5 +34,5 @@ RUN mkdir -p /mnt/share \
 
 VOLUME ["/etc", "/var/lib/samba" ]
 
-ENTRYPOINT ["tini", "--"]
-CMD ["smbd --foreground --log-stdout --no-process-group"]
+ENTRYPOINT ["smbd", "--foreground", "--log-stdout", "--no-process-group"]
+CMD []
