@@ -5,6 +5,8 @@ LABEL about.license="SPDX:Apache-2.0"
 ARG container_user
 RUN test -n "${container_user}"
 
+ENV HOST_SAMBASHARE_GID=511 #syncd with system gid on docker host
+
 USER root
 
 WORKDIR /tmp
@@ -23,9 +25,10 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /mnt/share
-
-# From https://github.com/alubbock/samba-docker
+RUN groupadd --gid ${HOST_SAMBASHARE_GID} \
+    && mkdir -p /mnt/share \
+    && chown root:sambashare /mnt/share \
+    && chmod -R 0770 /mnt/share
 
 VOLUME ["/etc", "/var/lib/samba" ]
 

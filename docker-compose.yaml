@@ -22,7 +22,7 @@ services:
       - ./smb.conf:/etc/samba/smb.conf:ro
       - samba-var-lib-samba:/var/lib/samba
       - samba-etc:/etc
-      - /mnt/share:/mnt/share:z
+      - /mnt/storage:/mnt/share:z
 
 networks:
   default:
