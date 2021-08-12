@@ -17,16 +17,17 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
         gnupg2 \
         apt-transport-https \
         ca-certificates \
-        samba samba-client \
+        tini samba samba-client \
     && update-ca-certificates \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /mnt/share
+
 # From https://github.com/alubbock/samba-docker
 
-VOLUME ["/etc", "/var/cache/samba", "/var/lib/samba", "/var/log/samba",\
-        "/run/samba"]
+VOLUME ["/etc", "/var/lib/samba" ]
 
-ENTRYPOINT ["smbd", "--foreground", "--log-stdout", "--no-process-group"]
-CMD []
+ENTRYPOINT ["tini", "--"]
+CMD ["smbd --foreground --log-stdout --no-process-group"]
