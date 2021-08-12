@@ -17,18 +17,21 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
         gnupg2 \
         apt-transport-https \
         ca-certificates \
-        sudo \
+        samba samba-client \
     && update-ca-certificates \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password ${container_user} \
-    && usermod -a -G users ${container_user} \
-    && usermod -a -G sudo ${container_user} \
-    && echo "${container_user} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${container_user} \
-    && chmod 0440 /etc/sudoers.d/${container_user}
+    && usermod -a -G users ${container_user} 
 
 USER ${container_user}
 
-CMD ["/bin/bash","-l"]
+# From https://github.com/alubbock/samba-docker
+
+VOLUME ["/etc", "/var/cache/samba", "/var/lib/samba", "/var/log/samba",\
+        "/run/samba"]
+
+ENTRYPOINT ["smbd", "--foreground", "--log-stdout", "--no-process-group"]
+CMD []
