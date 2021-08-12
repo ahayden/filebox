@@ -26,7 +26,7 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd --gid ${HOST_SAMBASHARE_GID} \
+RUN groupadd --gid ${HOST_SAMBASHARE_GID} sambashare \
     && mkdir -p /mnt/share \
     && chown root:sambashare /mnt/share \
     && chmod -R 0770 /mnt/share

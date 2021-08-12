@@ -20,13 +20,13 @@ services:
     tty: true
     volumes:
       - ./smb.conf:/etc/samba/smb.conf:ro
-      - samba-var-lib-samba:/var/lib/samba
-      - samba-etc:/etc
+      - var-lib-samba:/var/lib/samba
+      - etc:/etc
       - /mnt/storage:/mnt/share:z
 
 networks:
   default:
 
 volumes:
-  samba-var-lib-samba:
-  samba-etc:
+  var-lib-samba:
+  etc:
