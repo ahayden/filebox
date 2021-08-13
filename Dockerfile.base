@@ -22,7 +22,7 @@ RUN apt-get update -qq -y && apt-get install --no-install-recommends -qq -y \
         gnupg2 \
         apt-transport-https \
         ca-certificates \
-        samba samba-client \
+        tini samba samba-client \
     && update-ca-certificates \
     && apt-get -y autoclean \
     && apt-get -y autoremove \
