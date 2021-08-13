@@ -6,11 +6,14 @@ Dockerfile and compose elements taken from
 [alubbock/samba-docker](https://github.com/alubbock/samba-docker)
 
 ### Bootstrap
-- Add NVME SSD
+- On docker host: add storage, ie:
   - `parted /dev/nvme0n1 mklabel gpt`
   - `parted -a optimal /dev/nvme0n1 mkpart primary 0% 100%`
   - Append UUID to fstab
-- `docker exec -it $containerid /bin/bash`
+  - `groupadd --gid 511`
+  - `chown root:sambashare /mnt/storage`
+  - `chmod -R 0770 /mnt/storage`
+- In container: `docker exec -it $containerid /bin/bash`
   - `useradd $username`
   - `adduser $username sambashare`
   - `smbpasswd -a $username`

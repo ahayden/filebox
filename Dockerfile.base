@@ -34,5 +34,6 @@ RUN mkdir -p /mnt/share \
 
 VOLUME ["/etc", "/var/lib/samba" ]
 
-ENTRYPOINT ["smbd", "--foreground", "--log-stdout", "--no-process-group"]
-CMD []
+ENTRYPOINT ["tini", "--"]
+
+CMD /usr/sbin/smbd --foreground --log-stdout --no-process-group

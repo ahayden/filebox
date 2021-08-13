@@ -20,7 +20,10 @@ services:
     tty: true
     volumes:
       - ./smb.conf:/etc/samba/smb.conf:ro
+      - var-cache-samba:/var/cache/samba
       - var-lib-samba:/var/lib/samba
+      - var-log-samba:/var/log/samba
+      - run-samba:/run/samba
       - etc:/etc
       - /mnt/storage:/mnt/share:z
 
@@ -28,5 +31,8 @@ networks:
   default:
 
 volumes:
+  var-cache-samba:
   var-lib-samba:
+  var-log-samba:
+  run-samba:
   etc:
